@@ -1,2 +1,3 @@
 new in 1.0
+Made it so dialog and typing theme settings are saved in the app.
 Added various dialog and typing related sounds to the app.

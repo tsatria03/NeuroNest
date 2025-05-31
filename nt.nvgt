@@ -1,7 +1,7 @@
 #include"includes/includes.nvgt"
-int echomode;
-string dlgtype;
-string keyboardtheme;
+int echomode=0;
+string dlgtype="dialog";
+string keyboardtheme="keyboard";
 string filename;
 string filetext;
 string version;
@@ -9,7 +9,26 @@ file dockfile, dockver;
 instance appstence("nt");
 audio_form form;
 sound_pool p, spool, temp;
+savedata st("data/preffs/options.dat","F3Jua5qKnJADtZH94CKSUxVr7kAl3BCW6D4MlajEwWb3JUVDXq7HYT79zD18XMco8f1VDE6SNnjB3ApdUIb4mDd5DSxYAw8KiI9tZAEURDwExxEUZnTIRdHs2kBCujq6CM0Zt9awIZO08HSiGMpvKv78MYR4oeb4N8pzLE7nltqeobTsFCdtgFC9TPXOyGX82SmyxlTuPzJYeZSmCVI2VsLsq0YRZXjBGXnWyTRIobbc7v0oSUPCB6EjK3V1B6B6RNA2rhreNZB2K5RHSMfU1m0IjLu5CNppbKNQaxzfnRWcOVtQFdlOCIqEhUSi4jraN1C11zMSp8bD4ciOe2uOgq72s1jfzWxzDEHSzGjz2TvS");
 virtual_dialogs vd;
+void readpreffs()
+{
+st.load();
+if(st.d.exists("dlgtype"))
+{
+dlgtype=st.read_string("dlgtype");
+}
+if(st.d.exists("keyboardtheme"))
+{
+keyboardtheme=st.read_string("keyboardtheme");
+}
+}
+void writepreffs()
+{
+st.add("dlgtype",dlgtype);
+st.add("keyboardtheme",keyboardtheme);
+st.save();
+}
 void main()
 {
 getver();
@@ -30,15 +49,20 @@ form.reset();
 form.create_window("NeuroNest", false);
 int newdock=form.create_button("Create file");
 int opdock=form.create_button("Load file");
-int quitdock=form.create_button("Quit app");
+int preffs=form.create_button("&preferences");
+int quit=form.create_button("Quit app");
 form.focus(newdock);
 while(true)
 {
 wait(5);
 form.monitor();
-if(key_pressed(KEY_ESCAPE) || form.is_pressed(quitdock))
+if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
 exit();
+}
+if(form.is_pressed(preffs))
+{
+preffsmenu();
 }
 if(form.is_pressed(newdock))
 {
