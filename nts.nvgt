@@ -1,9 +1,8 @@
 #include"includes/includes.nvgt"
 int echomode=1;
 int current_theme_index = 0;
-string dlgtype="dialog";
-string[] keyboardthemes;
 string keyboardtheme="keyboard";
+string[] keyboardthemes;
 string filename;
 string filetext;
 string version;
@@ -16,10 +15,6 @@ virtual_dialogs vd;
 void readpreffs()
 {
 st.load();
-if(st.d.exists("dlgtype"))
-{
-dlgtype=st.read_string("dlgtype");
-}
 if(st.d.exists("echomode"))
 {
 echomode=st.read_number("echomode");
@@ -40,7 +35,6 @@ break;
 }
 void writepreffs()
 {
-st.add("dlgtype",dlgtype);
 st.add("echomode",echomode);
 st.add("keyboardtheme",keyboardtheme);
 st.save();
@@ -49,7 +43,6 @@ void main()
 {
 if (!directory_exists("data/preffs")) directory_create("data/preffs");
 if (!directory_exists("data/notes")) directory_create("data/notes");
-readpreffs();
 keyboardthemes = list_folders("sounds/typing themes/");
 if (keyboardthemes.length() > 0)
 {
@@ -73,6 +66,7 @@ else
 {
 alert("No keyboard themes found!", "Make sure folders are in: sounds/typing themes/");
 }
+readpreffs();
 getver();
 show_window("NeuroNest, version "+version);
 if(appstence.is_already_running)
@@ -172,6 +166,7 @@ filetext=form.get_text(dockbox);
 if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
 {
 current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
+keyboardthemes.sort_ascending();
 writepreffs();
 keyboardtheme = keyboardthemes[current_theme_index];
 speak(keyboardtheme);

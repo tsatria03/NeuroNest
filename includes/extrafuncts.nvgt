@@ -110,13 +110,7 @@ string strip_directory(string path)
 }
 string[] list_folders(string path)
 {
-string[] dirs = find_directories(path);
-string[] clean;
-for (uint i = 0; i < dirs.length(); i++)
-{
-clean.push_back(strip_directory(dirs[i]));
-}
-return clean;
+return find_directories(path + "*");
 }
 string get_key_echo_description(int mode)
 {
