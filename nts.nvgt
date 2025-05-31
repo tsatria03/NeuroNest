@@ -119,7 +119,7 @@ void note_editor()
 {
 form.reset();
 form.create_window("note editor", false);
-int dockbox=form.create_input_box("Text area", "", read_only:false, multiline:true, multiline_enter:true);
+int dockbox = form.create_input_box("Text area", filetext, read_only:false, multiline:true, multiline_enter:true);
 int opdock=form.create_button("Load file");
 int savdock=form.create_button("Save file");
 int savdock2=form.create_button("Save file as");
@@ -143,14 +143,10 @@ if (f.open(filename, "wb"))
 f.write(filetext);
 f.close();
 alert("Saved", "File saved: " + filename);
-wait(500);
-note_editor();
 }
 else
 {
 alert("Error", "Could not save the file.");
-wait(500);
-note_editor();
 }
 }
 if (form.is_pressed(savdock2))
