@@ -1,3 +1,4 @@
 new in 1.0
+Improved the save data class by making all of the overloaded variable functions into one unified function for easier method calls.
 Made it so dialog and typing theme settings are saved in the app.
 Added various dialog and typing related sounds to the app.
