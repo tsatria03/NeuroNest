@@ -1,0 +1,52 @@
+#include"includes/includes.nvgt"
+int echomode;
+string dlgtype;
+string keyboardtheme;
+string filename;
+string filetext;
+string version;
+file dockfile, dockver;
+instance appstence("nt");
+audio_form form;
+sound_pool p, spool, temp;
+virtual_dialogs vd;
+void main()
+{
+getver();
+show_window("NeuroNest, version "+version);
+if(appstence.is_already_running)
+{
+alert("error", "You can only have one instence of this app running!");
+exit();
+}
+else
+{
+    notewriter();
+}
+}
+void notewriter()
+{
+form.reset();
+form.create_window("NeuroNest", false);
+int newdock=form.create_button("Create file");
+int opdock=form.create_button("Load file");
+int quitdock=form.create_button("Quit app");
+form.focus(newdock);
+while(true)
+{
+wait(5);
+form.monitor();
+if(key_pressed(KEY_ESCAPE) || form.is_pressed(quitdock))
+{
+exit();
+}
+if(form.is_pressed(newdock))
+{
+//do something
+}
+if(form.is_pressed(opdock))
+{
+//do something
+}
+}
+}

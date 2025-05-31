@@ -1,0 +1,11 @@
+#include"bgt_compat.nvgt"
+#include"file_contents.nvgt"
+#include"instance.nvgt"
+#include"size.nvgt"
+#include"sound_pool.nvgt"
+#include"dlg.nvgt"
+#include"extrafuncts.nvgt"
+#include"form.nvgt"
+#include"speech.nvgt"
+#include"virtual_dialogs.nvgt"
+typedef uint8 usmall; typedef int8 small;
