@@ -1,4 +1,5 @@
 new in 1.0
+Added the ability to save created files to a custom location instead of the default preconfigured location.
 Added the ability to open an existing file within the note editor screen.
 Added the ability to create and save your written notes to a file.
 Improved the save data class by making all of the overloaded variable functions into one unified function for easier method calls.

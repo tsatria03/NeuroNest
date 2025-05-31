@@ -1,5 +1,5 @@
 #include"includes/includes.nvgt"
-int echomode=0;
+int echomode=1;
 string dlgtype="dialog";
 string keyboardtheme="keyboard";
 string filename;
@@ -128,6 +128,7 @@ form.focus(dockbox);
 while(true)
 {
 wait(5);
+key_echocheck(form);
 form.monitor();
 filetext=form.get_text(dockbox);
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
@@ -150,6 +151,27 @@ else
 alert("Error", "Could not save the file.");
 wait(500);
 note_editor();
+}
+}
+if (form.is_pressed(savdock2))
+{
+string newpath = save_file_dialog("Text Files:txt", "data/notes/");
+if (!newpath.empty())
+{
+if (!newpath.lower().ends_with(".txt"))
+newpath += ".txt";
+file f;
+if (f.open(newpath, "wb"))
+{
+f.write(filetext);
+f.close();
+filename = newpath;
+alert("Saved", "File saved as: " + filename);
+}
+else
+{
+alert("Error", "Could not save the file.");
+}
 }
 }
 if(form.is_pressed(opdock))
