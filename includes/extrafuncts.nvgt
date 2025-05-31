@@ -108,6 +108,16 @@ string strip_directory(string path)
         return path.substr(lastSlash + 1);
     return path;
 }
+string[] list_folders(string path)
+{
+string[] dirs = find_directories(path);
+string[] clean;
+for (uint i = 0; i < dirs.length(); i++)
+{
+clean.push_back(strip_directory(dirs[i]));
+}
+return clean;
+}
 string get_key_echo_description(int mode)
 {
 if (mode==textflag_none)
@@ -135,18 +145,5 @@ if (echomode>3) echomode=0;
 writepreffs();
 form.set_default_keyboard_echo(echomode);
 speak(get_key_echo_description(echomode));
-}
-}
-void key_themecheck(audio_form@ form)
-{
-if (form.get_control_type(form.get_current_focus()) == ct_input)
-{
-if (key_repeating(KEY_F3) && keyboardthemes.length() > 0)
-{
-current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
-writepreffs();
-keyboardtheme = keyboardthemes[current_theme_index];
-speak(keyboardtheme);
-}
 }
 }

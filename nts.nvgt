@@ -47,6 +47,32 @@ st.save();
 }
 void main()
 {
+if (!directory_exists("data/preffs")) directory_create("data/preffs");
+if (!directory_exists("data/notes")) directory_create("data/notes");
+readpreffs();
+keyboardthemes = list_folders("sounds/typing themes/");
+if (keyboardthemes.length() > 0)
+{
+bool found_theme = false;
+for (uint i = 0; i < keyboardthemes.length(); i++)
+{
+if (keyboardthemes[i] == keyboardtheme)
+{
+current_theme_index = i;
+found_theme = true;
+break;
+}
+}
+if (!found_theme)
+{
+keyboardtheme = keyboardthemes[0];
+current_theme_index = 0;
+}
+}
+else
+{
+alert("No keyboard themes found!", "Make sure folders are in: sounds/typing themes/");
+}
 getver();
 show_window("NeuroNest, version "+version);
 if(appstence.is_already_running)
@@ -65,22 +91,16 @@ form.reset();
 form.create_window("NeuroNest", false);
 int newdock=form.create_button("Create file");
 int opdock=form.create_button("Load file");
-int preffs=form.create_button("&preferences");
 int quit=form.create_button("Quit app");
 form.focus(newdock);
 while(true)
 {
 wait(5);
 key_echocheck(form);
-key_themecheck(form);
 form.monitor();
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
 exit();
-}
-if(form.is_pressed(preffs))
-{
-preffsmenu();
 }
 if(form.is_pressed(newdock))
 {
@@ -147,9 +167,15 @@ while(true)
 {
 wait(5);
 key_echocheck(form);
-key_themecheck(form);
 form.monitor();
 filetext=form.get_text(dockbox);
+if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
+{
+current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
+writepreffs();
+keyboardtheme = keyboardthemes[current_theme_index];
+speak(keyboardtheme);
+}
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
 notewriter();
