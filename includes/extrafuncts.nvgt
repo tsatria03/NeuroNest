@@ -120,19 +120,33 @@ else if (mode==textflag_characters_words)
 return "echo both characters and words";
 return "";
 }
+void getver()
+{
+dockver.open("docks/version.txt","rb");
+version=dockver.read();
+dockver.close();
+}
 void key_echocheck(audio_form@ form)
 {
 if (key_pressed(KEY_F2))
 {
 echomode++;
 if (echomode>3) echomode=0;
+writepreffs();
 form.set_default_keyboard_echo(echomode);
 speak(get_key_echo_description(echomode));
 }
 }
-void getver()
+void key_themecheck(audio_form@ form)
 {
-dockver.open("docks/version.txt","rb");
-version=dockver.read();
-dockver.close();
+if (form.get_control_type(form.get_current_focus()) == ct_input)
+{
+if (key_repeating(KEY_F3) && keyboardthemes.length() > 0)
+{
+current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
+writepreffs();
+keyboardtheme = keyboardthemes[current_theme_index];
+speak(keyboardtheme);
+}
+}
 }

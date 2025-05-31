@@ -1,11 +1,13 @@
 #include"includes/includes.nvgt"
 int echomode=1;
+int current_theme_index = 0;
 string dlgtype="dialog";
+string[] keyboardthemes;
 string keyboardtheme="keyboard";
 string filename;
 string filetext;
 string version;
-file dockfile, dockver;
+file dockver;
 instance appstence("nt");
 audio_form form;
 sound_pool p, spool, temp;
@@ -18,14 +20,28 @@ if(st.d.exists("dlgtype"))
 {
 dlgtype=st.read_string("dlgtype");
 }
+if(st.d.exists("echomode"))
+{
+echomode=st.read_number("echomode");
+form.set_default_keyboard_echo(echomode);
+}
 if(st.d.exists("keyboardtheme"))
 {
 keyboardtheme=st.read_string("keyboardtheme");
+for (uint i = 0; i < keyboardthemes.length(); i++)
+{
+if (keyboardthemes[i] == keyboardtheme)
+{
+current_theme_index = i;
+break;
+}
+}
 }
 }
 void writepreffs()
 {
 st.add("dlgtype",dlgtype);
+st.add("echomode",echomode);
 st.add("keyboardtheme",keyboardtheme);
 st.save();
 }
@@ -55,6 +71,8 @@ form.focus(newdock);
 while(true)
 {
 wait(5);
+key_echocheck(form);
+key_themecheck(form);
 form.monitor();
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
@@ -129,6 +147,7 @@ while(true)
 {
 wait(5);
 key_echocheck(form);
+key_themecheck(form);
 form.monitor();
 filetext=form.get_text(dockbox);
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
