@@ -66,11 +66,114 @@ preffsmenu();
 }
 if(form.is_pressed(newdock))
 {
-//do something
+vd.set_disallowed_chars("!@#$%^&*()[]{};:'\"\\|,.<>?/+=`~", false, "This character is not allowed.");
+string fn=vd.input_box("","Enter the name of this file.");
+if (!fn.empty())
+{
+string fullpath = "data/notes/" + fn + ".txt";
+file f;
+if (f.open(fullpath, "wb"))
+{
+f.write("");
+f.close();
+filename = fullpath;
+filetext = "";
+alert("Note created", "Empty note created at: " + filename);
+wait(500);
+note_editor();
+}
+else
+{
+alert("Error", "Could not create the file: " + fullpath);
+wait(500);
+notewriter();
+}
+}
 }
 if(form.is_pressed(opdock))
 {
-//do something
+string path = open_file_dialog("Text Files:txt", "data/notes/");
+if (!path.empty())
+{
+file f;
+if (f.open(path, "rb"))
+{
+filetext = f.read();
+f.close();
+filename = path;
+alert("Note loaded", "Opened: " + filename);
+wait(500);
+note_editor();
+}
+else
+{
+alert("Error", "Failed to read the file.");
+wait(500);
+notewriter();
+}
+}
+}
+}
+}
+void note_editor()
+{
+form.reset();
+form.create_window("note editor", false);
+int dockbox=form.create_input_box("Text area", "", read_only:false, multiline:true, multiline_enter:true);
+int opdock=form.create_button("Load file");
+int savdock=form.create_button("Save file");
+int savdock2=form.create_button("Save file as");
+int quit=form.create_button("Close file");
+form.focus(dockbox);
+while(true)
+{
+wait(5);
+form.monitor();
+filetext=form.get_text(dockbox);
+if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
+{
+notewriter();
+}
+if(form.is_pressed(savdock))
+{
+file f;
+if (f.open(filename, "wb"))
+{
+f.write(filetext);
+f.close();
+alert("Saved", "File saved: " + filename);
+wait(500);
+note_editor();
+}
+else
+{
+alert("Error", "Could not save the file.");
+wait(500);
+note_editor();
+}
+}
+if(form.is_pressed(opdock))
+{
+string path = open_file_dialog("Text Files:txt", "data/notes/");
+if (!path.empty())
+{
+file f;
+if (f.open(path, "rb"))
+{
+filetext = f.read();
+f.close();
+filename = path;
+alert("Note loaded", "Opened: " + filename);
+wait(500);
+note_editor();
+}
+else
+{
+alert("Error", "Failed to read the file.");
+wait(500);
+note_editor();
+}
+}
 }
 }
 }

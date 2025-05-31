@@ -2423,7 +2423,6 @@ delete_highlighted();
 if (key_repeating(KEY_DELETE))
 delete_highlighted(1);
 if (multiline == true && (multiline_enter == true || (key_down(KEY_LCTRL)) || (key_down(KEY_RCTRL)) || (key_down(KEY_LSHIFT)) || (key_down(KEY_RSHIFT))) && ((key_repeating(KEY_RETURN)) || (key_repeating(KEY_NUMPAD_ENTER))))
-spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*return*"),false);
 add_new_line();
 }
 if (((key_down(KEY_LCTRL)) || (key_down(KEY_RCTRL))) && key_up(KEY_LSHIFT) && key_up(KEY_RSHIFT) && (key_repeating(KEY_A)))
@@ -3127,9 +3126,9 @@ void add_new_line() {
 if (multiline == false)
 return;
 add("\n");
+spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*return*"),false);
 if (echo_flag != textflag_none)
 speak("New Line", true);
-spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*return*"),false);
 }
 int current_line_start_position(bool word = false) {
 if (text == "")
