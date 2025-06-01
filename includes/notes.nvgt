@@ -103,6 +103,7 @@ void note_editor()
 form.reset();
 form.create_window("note editor", false);
 int dockbox = form.create_input_box("&Note text area", notetext, read_only:false, multiline:true, multiline_enter:true);
+int infdock=form.create_button("Note &info");
 int opdock=form.create_button("&Load note");
 int rendock=form.create_button("&Rename note");
 int savdock=form.create_button("&Save note");
@@ -149,6 +150,13 @@ if (key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 if (yes_no("Are you sure you want to close this note? Unsaved changes will be lost."))
 notewriter();
 else
+form.focus(dockbox);
+}
+if (form.is_pressed(infdock))
+{
+string stats = get_note_stats(notetext);
+alert("Note Stats", stats);
+wait(500);
 form.focus(dockbox);
 }
 if(form.is_pressed(opdock))

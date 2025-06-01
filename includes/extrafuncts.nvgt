@@ -72,6 +72,32 @@ return path+snd[random(0,snd.length()-1)];
 else
 return "";
 }
+string get_note_stats(const string& in text)
+{
+int characters = text.length();
+string cleaned = strip_text(text);
+string[] wordsplit = string_split(cleaned, " ", false);
+int words = wordsplit.length();
+int lines = 0;
+if (text.length() > 0)
+{
+lines = string_split(text, "\n", false).length();
+}
+return "Characters written: " + characters + ". Words written: " + words + ". Lines written: " + lines+".";
+}
+string strip_text(const string& in text)
+{
+string cleaned = text;
+cleaned.replace("\t", " ");
+cleaned.replace("\r", "");
+cleaned.replace("\n", " ");
+while (cleaned.find("  ") != -1)
+{
+cleaned.replace("  ", " ");
+}
+cleaned = string_trim_sides(cleaned);
+return cleaned;
+}
 string string_trim_sides(const string& in str)
 {
 string result=str;
