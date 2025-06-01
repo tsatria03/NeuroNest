@@ -6,8 +6,7 @@ string keyboardtheme="keyboard";
 string[] keyboardthemes;
 string notename;
 string notetext;
-string version;
-file dockver;
+string version="1.0";
 instance appstence("nt");
 audio_form form;
 sound_pool p, spool, temp;
@@ -42,7 +41,6 @@ else
 {
 alert("No keyboard themes found!", "Make sure folders are in: sounds/typing themes/");
 }
-getver();
 show_window("NeuroNest, version "+version);
 if(appstence.is_already_running)
 {

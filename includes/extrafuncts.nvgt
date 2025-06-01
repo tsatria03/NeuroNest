@@ -124,12 +124,6 @@ else if (mode==textflag_characters_words)
 return "echo both characters and words";
 return "";
 }
-void getver()
-{
-dockver.open("docks/version.txt","rb");
-version=dockver.read();
-dockver.close();
-}
 void key_echocheck(audio_form@ form)
 {
 if (key_pressed(KEY_F2))
@@ -141,3 +135,4 @@ writepreffs();
 speak(get_key_echo_description(echomode));
 }
 }
+
