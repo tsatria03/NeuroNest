@@ -40,9 +40,12 @@ themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyb
 speak("Typing sounds enabled.");
 }
 }
-if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
+if (key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
+if (yes_no("Are you sure you want to close the app?"))
 exit();
+else
+notewriter();
 }
 if(form.is_pressed(newdock))
 {
@@ -141,9 +144,12 @@ themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyb
 speak("Typing sounds enabled.");
 }
 }
-if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
+if (key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
+if (yes_no("Are you sure you want to close this note? Unsaved changes will be lost."))
 notewriter();
+else
+form.focus(dockbox);
 }
 if(form.is_pressed(opdock))
 {

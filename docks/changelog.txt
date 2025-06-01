@@ -1,4 +1,5 @@
 new in 1.0
+Added menu prompts to actions that involve patencial data los in the app.
 Added sounds to indicate toggling typing themes. These sounds are available for all keyboard themes.
 Added the ability to toggle the typing sounds on or off. You can press F4 to do this in all input boxes. This setting will be saved the next time you launch the app.
 Added a quick readme. You can find this under the docks folder.

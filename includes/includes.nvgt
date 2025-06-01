@@ -5,6 +5,7 @@
 #include"sound_pool.nvgt"
 #include"extrafuncts.nvgt"
 #include"form.nvgt"
+#include"menu.nvgt"
 #include"notes.nvgt"
 #include"savedata.nvgt"
 #include"savefuncts.nvgt"
