@@ -2,9 +2,9 @@ void notewriter()
 {
 form.reset();
 form.create_window("NeuroNest", false);
-int newdock=form.create_button("Create note");
-int opdock=form.create_button("Load note");
-int quit=form.create_button("Close app");
+int newdock=form.create_button("Create &note");
+int opdock=form.create_button("&Load note");
+int quit=form.create_button("&Close app");
 form.focus(newdock);
 while(true)
 {
@@ -80,12 +80,12 @@ void note_editor()
 {
 form.reset();
 form.create_window("note editor", false);
-int dockbox = form.create_input_box("Text area", notetext, read_only:false, multiline:true, multiline_enter:true);
-int opdock=form.create_button("Load note");
-int rendock=form.create_button("Rename note");
-int savdock=form.create_button("Save note");
-int savdock2=form.create_button("Save note as");
-int quit=form.create_button("Close note");
+int dockbox = form.create_input_box("&Text area", notetext, read_only:false, multiline:true, multiline_enter:true);
+int opdock=form.create_button("&Load note");
+int rendock=form.create_button("&Rename note");
+int savdock=form.create_button("&Save note");
+int savdock2=form.create_button("Save note &as");
+int quit=form.create_button("&Close note");
 form.focus(dockbox);
 while(true)
 {
@@ -126,7 +126,7 @@ else
 {
 alert("Error", "Failed to read the note.");
 wait(500);
-note_editor();
+form.focus(dockbox);
 }
 }
 }
@@ -140,6 +140,8 @@ string newpath = "data/notes/" + newname + ".txt";
 if (file_exists(newpath))
 {
 alert("Error", "A note with that name already exists.");
+wait(500);
+form.focus(dockbox);
 }
 else
 {
@@ -147,7 +149,8 @@ string contents = get_file_contents(notename);
 if (contents == "")
 {
 alert("Error", "Could not read from the original note.");
-return;
+wait(500);
+form.focus(dockbox);
 }
 if (put_file_contents(newpath, contents))
 {
@@ -155,15 +158,21 @@ if (file_delete(notename))
 {
 notename = newpath;
 alert("Success", "Note renamed to: " + newname + ".txt");
+wait(500);
+form.focus(dockbox);
 }
 else
 {
 alert("Partial success", "Copied to new note, but failed to delete original.");
+wait(500);
+form.focus(dockbox);
 }
 }
 else
 {
 alert("Error", "Failed to write the new note.");
+wait(500);
+form.focus(dockbox);
 }
 }
 }
@@ -176,10 +185,14 @@ if (f.open(notename, "wb"))
 f.write(notetext);
 f.close();
 alert("Saved", "Note saved to " + notename);
+wait(500);
+form.focus(dockbox);
 }
 else
 {
 alert("Error", "Could not save the note.");
+wait(500);
+form.focus(dockbox);
 }
 }
 if (form.is_pressed(savdock2))
@@ -196,10 +209,14 @@ f.write(notetext);
 f.close();
 notename = newpath;
 alert("Saved", "Note saved as " + notename);
+wait(500);
+form.focus(dockbox);
 }
 else
 {
 alert("Error", "Could not save the note.");
+wait(500);
+form.focus(dockbox);
 }
 }
 }
