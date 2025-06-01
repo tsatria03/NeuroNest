@@ -1,5 +1,7 @@
 new in 1.0
-Added the ability to view information for the currently opened note. You can now press the "Note Info" button in the note editor to view it's statistics, such as character count, word count, and line count.
+Resolved an issue where the line count would still show as 1 after all content had been deleted from a note. The get_note_stats function now accurately skips over empty or whitespace-filled lines.
+Resolved an issue where the word count would incorrectly display as 1 even if the note was empty or only contained spaces. The get_note_stats function now properly trims and checks for real word content before attempting to count it.
+Added the ability to view information for the currently opened note. You can now press the note info" button in the note editor to view it's statistics, such as character count, word count, and line count.
 Added menu prompts to actions that involve patencial data los in the app.
 Added sounds to indicate toggling typing themes. These sounds are available for all keyboard themes.
 Added the ability to toggle the typing sounds on or off. You can press F4 to do this in all input boxes. This setting will be saved the next time you launch the app.

@@ -74,25 +74,23 @@ return "";
 }
 string get_note_stats(const string& in text)
 {
-int characters = text.length();
-string cleaned = strip_text(text);
+string stripped = strip_text(text);
+int characters = stripped.length();
 int words = 0;
-if (cleaned.length() > 0)
+if (!stripped.empty())
 {
-string[] wordsplit = string_split(cleaned, " ");
-for (uint i = 0; i < wordsplit.length(); i++)
+string[] wordSplit = string_split(stripped, " ");
+for (uint i = 0; i < wordSplit.length(); i++)
 {
-if (strip_text(wordsplit[i]) != "") words++;
+if (wordSplit[i] != "") words++;
 }
 }
 int lines = 0;
-if (cleaned.length() > 0)
+string[] rawLines = string_split(text, "\n");
+for (uint i = 0; i < rawLines.length(); i++)
 {
-string[] lsplit = string_split(cleaned, "\n");
-for (uint i = 0; i < lsplit.length(); i++)
-{
-if (strip_text(lsplit[i]) != "") lines++;
-}
+string trimmedLine = strip_text(rawLines[i]);
+if (!trimmedLine.empty()) lines++;
 }
 return "Characters written: " + characters + ". Words written: " + words + ". Lines written: " + lines + ".";
 }
@@ -102,11 +100,9 @@ string cleaned = text;
 cleaned.replace("\t", " ");
 cleaned.replace("\r", "");
 cleaned.replace("\n", " ");
-while (cleaned.find("  ") != -1)
-{
-cleaned.replace("  ", " ");
-}
 cleaned = string_trim_sides(cleaned);
+regexp re(" +");
+cleaned = re.subst(cleaned, " ");
 return cleaned;
 }
 string string_trim_sides(const string& in str)
