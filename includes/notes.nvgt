@@ -28,7 +28,7 @@ exit();
 if(form.is_pressed(newdock))
 {
 vd.set_disallowed_chars("!@#$%^&*()[]{};:'\"\\|,.<>?/+-=`~", false, "This character is not allowed.");
-string nm=vd.input_box("","Enter the title of this note.");
+string nm=vd.input_box("", "Enter the title of this note.");
 if (!nm.empty())
 {
 string fullpath = "data/notes/" + nm + ".txt";
@@ -82,6 +82,7 @@ form.reset();
 form.create_window("note editor", false);
 int dockbox = form.create_input_box("Text area", notetext, read_only:false, multiline:true, multiline_enter:true);
 int opdock=form.create_button("Load note");
+int rendock=form.create_button("Rename note");
 int savdock=form.create_button("Save note");
 int savdock2=form.create_button("Save note as");
 int quit=form.create_button("Close note");
@@ -105,6 +106,67 @@ speak(keyboardtheme);
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
 notewriter();
+}
+if(form.is_pressed(opdock))
+{
+string path = open_file_dialog("Text Files:txt", "data/notes/");
+if (!path.empty())
+{
+file f;
+if (f.open(path, "rb"))
+{
+notetext = f.read();
+f.close();
+notename = path;
+alert("Note loaded", "Opened " + notename);
+wait(500);
+note_editor();
+}
+else
+{
+alert("Error", "Failed to read the note.");
+wait(500);
+note_editor();
+}
+}
+}
+if (form.is_pressed(rendock))
+{
+vd.set_disallowed_chars("!@#$%^&*()[]{};:'\"\\|,.<>?/+-=`~", false, "This character is not allowed.");
+string newname = vd.input_box("", "Enter a new name for this note.");
+if (!newname.empty())
+{
+string newpath = "data/notes/" + newname + ".txt";
+if (file_exists(newpath))
+{
+alert("Error", "A note with that name already exists.");
+}
+else
+{
+string contents = get_file_contents(notename);
+if (contents == "")
+{
+alert("Error", "Could not read from the original note.");
+return;
+}
+if (put_file_contents(newpath, contents))
+{
+if (file_delete(notename))
+{
+notename = newpath;
+alert("Success", "Note renamed to: " + newname + ".txt");
+}
+else
+{
+alert("Partial success", "Copied to new note, but failed to delete original.");
+}
+}
+else
+{
+alert("Error", "Failed to write the new note.");
+}
+}
+}
 }
 if(form.is_pressed(savdock))
 {
@@ -138,29 +200,6 @@ alert("Saved", "Note saved as " + notename);
 else
 {
 alert("Error", "Could not save the note.");
-}
-}
-}
-if(form.is_pressed(opdock))
-{
-string path = open_file_dialog("Text Files:txt", "data/notes/");
-if (!path.empty())
-{
-file f;
-if (f.open(path, "rb"))
-{
-notetext = f.read();
-f.close();
-notename = path;
-alert("Note loaded", "Opened " + notename);
-wait(500);
-note_editor();
-}
-else
-{
-alert("Error", "Failed to read the note.");
-wait(500);
-note_editor();
 }
 }
 }

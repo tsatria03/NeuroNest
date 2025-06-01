@@ -136,8 +136,8 @@ if (key_pressed(KEY_F2))
 {
 echomode++;
 if (echomode>3) echomode=0;
-writepreffs();
 form.set_default_keyboard_echo(echomode);
+writepreffs();
 speak(get_key_echo_description(echomode));
 }
 }
