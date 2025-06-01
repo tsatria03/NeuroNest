@@ -1,4 +1,5 @@
 new in 1.1
+Made it so the function keys don't trigger actions related to the input box unless you're currently focused on the control.
 The word count system has been fully removed due to inconsistent behavior and inaccurate results across various input scenarios.
 new in 1.0
 Resolved an issue where the line count would still show as 1 after all content had been deleted from a note. The get_note_stats function now accurately skips over empty or whitespace-filled lines.

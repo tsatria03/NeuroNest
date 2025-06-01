@@ -146,37 +146,8 @@ this.form.focus(text_box);
 while (true)
 {
 wait(5);
-key_echocheck(form);
+key_echo_themecheck(form);
 this.monitor();
-if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
-{
-keyboardthemes.sort(natural_number_sort);
-current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
-keyboardtheme = keyboardthemes[current_theme_index];
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);
-speak(keyboardtheme);
-}
-if (key_repeating(KEY_F4))
-{
-if(themesound==true)
-{
-themesound=false;
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*disable*"),false,0,0,-5,100,false);
-speak("Typing sounds disabled.");
-}
-else
-{
-themesound=true;
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*enable*"),false,0,0,-5,100,false);
-speak("Typing sounds enabled.");
-}
-}
 if (this.form.is_pressed(ok_button))
 {
 result = this.form.get_text(text_box);

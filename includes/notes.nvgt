@@ -9,37 +9,8 @@ form.focus(newdock);
 while(true)
 {
 wait(5);
-key_echocheck(form);
+key_echo_themecheck(form);
 form.monitor();
-if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
-{
-keyboardthemes.sort(natural_number_sort);
-current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
-keyboardtheme = keyboardthemes[current_theme_index];
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);
-speak(keyboardtheme);
-}
-if (key_repeating(KEY_F4))
-{
-if(themesound==true)
-{
-themesound=false;
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*disable*"),false,0,0,-5,100,false);
-speak("Typing sounds disabled.");
-}
-else
-{
-themesound=true;
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*enable*"),false,0,0,-5,100,false);
-speak("Typing sounds enabled.");
-}
-}
 if (key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
 if (yes_no("Are you sure you want to close the app?"))
@@ -113,38 +84,9 @@ form.focus(dockbox);
 while(true)
 {
 wait(5);
-key_echocheck(form);
+key_echo_themecheck(form);
 form.monitor();
 notetext=form.get_text(dockbox);
-if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
-{
-keyboardthemes.sort(natural_number_sort);
-current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
-keyboardtheme = keyboardthemes[current_theme_index];
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);
-speak(keyboardtheme);
-}
-if (key_repeating(KEY_F4))
-{
-if(themesound==true)
-{
-themesound=false;
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*disable*"),false,0,0,-5,100,false);
-speak("Typing sounds disabled.");
-}
-else
-{
-themesound=true;
-writepreffs();
-spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*enable*"),false,0,0,-5,100,false);
-speak("Typing sounds enabled.");
-}
-}
 if (key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
 if (yes_no("Are you sure you want to close this note? Unsaved changes will be lost."))
