@@ -1,5 +1,6 @@
 #include"includes/includes.nvgt"
 int themeslot;
+bool themesound=true;
 int echomode=1;
 int current_theme_index = 0;
 string keyboardtheme="keyboard";

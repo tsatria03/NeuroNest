@@ -1,6 +1,10 @@
 void readpreffs()
 {
 st.load();
+if(st.d.exists("themesound"))
+{
+themesound=st.read_bool("themesound");
+}
 if(st.d.exists("echomode"))
 {
 echomode=st.read_number("echomode");
@@ -21,6 +25,7 @@ break;
 }
 void writepreffs()
 {
+st.add("themesound",themesound);
 st.add("echomode",echomode);
 st.add("keyboardtheme",keyboardtheme);
 st.save();

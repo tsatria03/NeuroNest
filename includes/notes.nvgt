@@ -21,6 +21,25 @@ spool.destroy_sound(themeslot);
 themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);
 speak(keyboardtheme);
 }
+if (key_repeating(KEY_F4))
+{
+if(themesound==true)
+{
+themesound=false;
+writepreffs();
+spool.destroy_sound(themeslot);
+themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*disable*"),false,0,0,-5,100,false);
+speak("Typing sounds disabled.");
+}
+else
+{
+themesound=true;
+writepreffs();
+spool.destroy_sound(themeslot);
+themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*enable*"),false,0,0,-5,100,false);
+speak("Typing sounds enabled.");
+}
+}
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
 exit();
@@ -102,6 +121,25 @@ writepreffs();
 spool.destroy_sound(themeslot);
 themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);
 speak(keyboardtheme);
+}
+if (key_repeating(KEY_F4))
+{
+if(themesound==true)
+{
+themesound=false;
+writepreffs();
+spool.destroy_sound(themeslot);
+themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*disable*"),false,0,0,-5,100,false);
+speak("Typing sounds disabled.");
+}
+else
+{
+themesound=true;
+writepreffs();
+spool.destroy_sound(themeslot);
+themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*enable*"),false,0,0,-5,100,false);
+speak("Typing sounds enabled.");
+}
 }
 if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {

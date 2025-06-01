@@ -2412,8 +2412,8 @@ if (overwrite)
 edit(char);
 else
 add(char);
-if(char==" ") spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*space*"),false);
-if(char!=" ") spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*type*"),false);
+if(char==" " and themesound==true) spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*space*"),false);
+if(char!=" " and themesound==true) spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*type*"),false);
 }
 if (((key_down(KEY_LCTRL)) || (key_down(KEY_RCTRL))) && (key_repeating(KEY_X)) && password_mask == "")
 cut_highlighted();
@@ -3081,7 +3081,7 @@ sel_start = -1;
 sel_end = -1;
 if (speak_deleted)
 speak("selection deleted");
-spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*delete*"),false);
+if(themesound==true) spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*delete*"),false);
 return;
 } else if (from_start == 0 && cursor > 0) {
 int old_cursor = cursor;
@@ -3090,7 +3090,7 @@ if (cursor >= text.length())
 cursor = text.length() - 1;
 if (speak_deleted)
 speak(input_box_speak(find_appropriate_character(text.substr(cursor, 4)), true) + " deleted" + (delete_speech_text != "" ? " " + delete_speech_text : ""), true);
-spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*delete*"),false);
+if(themesound==true) spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*delete*"),false);
 text = text.substr(0, cursor) + text.substr(old_cursor);
 } else if (from_start == 1) {
 string del_char = "Blank";
@@ -3127,7 +3127,7 @@ void add_new_line() {
 if (multiline == false)
 return;
 add("\n");
-spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*return*"),false);
+if(themesound==true) spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*return*"),false);
 if (echo_flag != textflag_none)
 speak("New Line", true);
 }

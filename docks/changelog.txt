@@ -1,6 +1,7 @@
 new in 1.0
+Added sounds to indicate toggling typing themes. These sounds are available for all keyboard themes.
+Added the ability to toggle the typing sounds on or off. You can press F4 to do this in all input boxes. This setting will be saved the next time you launch the app.
 Added a quick readme. You can find this under the docks folder.
-
 Added alt keyboard shortcuts to most frequently visited sections of the app.
 Added the ability to rename notes in the note editor screen.
 Resolved an issue where cycling keyboard themes using the F1 key could select incorrect themes due to the theme list being sorted after the index was incremented. The sorting is now applied before index changes, ensuring consistent theme order and proper selection.
