@@ -1,3 +1,5 @@
+new in 1.1
+The word count system has been fully removed due to inconsistent behavior and inaccurate results across various input scenarios.
 new in 1.0
 Resolved an issue where the line count would still show as 1 after all content had been deleted from a note. The get_note_stats function now accurately skips over empty or whitespace-filled lines.
 Resolved an issue where the word count would incorrectly display as 1 even if the note was empty or only contained spaces. The get_note_stats function now properly trims and checks for real word content before attempting to count it.

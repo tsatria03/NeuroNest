@@ -154,8 +154,8 @@ form.focus(dockbox);
 }
 if (form.is_pressed(infdock))
 {
-string stats = get_note_stats(notetext);
-alert("Note Stats", stats);
+notetext=form.get_text(dockbox);
+alert("Note Stats", get_note_charlines(notetext));
 wait(500);
 form.focus(dockbox);
 }
