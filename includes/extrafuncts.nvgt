@@ -65,7 +65,7 @@ string find_sound(string soundname)
 string[] snd=find_files(soundname);
 if (snd.length()>0)
 {
-string[] a_path=string_split(soundname,"/",true);
+string[] a_path=string_split(soundname,"/");
 string path=string_replace(soundname,a_path[a_path.length()-1],"",true);
 return path+snd[random(0,snd.length()-1)];
 }
@@ -76,14 +76,25 @@ string get_note_stats(const string& in text)
 {
 int characters = text.length();
 string cleaned = strip_text(text);
-string[] wordsplit = string_split(cleaned, " ", false);
-int words = wordsplit.length();
-int lines = 0;
-if (text.length() > 0)
+int words = 0;
+if (cleaned.length() > 0)
 {
-lines = string_split(text, "\n", false).length();
+string[] wordsplit = string_split(cleaned, " ");
+for (uint i = 0; i < wordsplit.length(); i++)
+{
+if (strip_text(wordsplit[i]) != "") words++;
 }
-return "Characters written: " + characters + ". Words written: " + words + ". Lines written: " + lines+".";
+}
+int lines = 0;
+if (cleaned.length() > 0)
+{
+string[] lsplit = string_split(cleaned, "\n");
+for (uint i = 0; i < lsplit.length(); i++)
+{
+if (strip_text(lsplit[i]) != "") lines++;
+}
+}
+return "Characters written: " + characters + ". Words written: " + words + ". Lines written: " + lines + ".";
 }
 string strip_text(const string& in text)
 {
@@ -161,4 +172,3 @@ writepreffs();
 speak(get_key_echo_description(echomode));
 }
 }
-
