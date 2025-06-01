@@ -1,5 +1,6 @@
 new in 1.1
-Made it so the function keys don't trigger actions related to the input box unless you're currently focused on the control.
+Enhanced the close note dialog by replacing the original two-prompt confirmation system with a single streamlined menu. Users are now presented with a clear 3-option dialog for what to do with the written note. This improves usability, prevents accidental data loss, and keeps the workflow smooth and intuitive.
+Made it so the function keys don't trigger actions related to the input box unless you're spisificly focused on the control.
 The word count system has been fully removed due to inconsistent behavior and inaccurate results across various input scenarios.
 new in 1.0
 Resolved an issue where the line count would still show as 1 after all content had been deleted from a note. The get_note_stats function now accurately skips over empty or whitespace-filled lines.

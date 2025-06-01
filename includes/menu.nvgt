@@ -223,3 +223,10 @@ bool yes_no(const string&in prompt, menu@ m = null) {
 	}
 	return m.selected_item == 1;
 }
+void setupmenu()
+{
+m.reset();
+m.automatic_intro = true;
+m.focus_first_item = false;
+m.wrap=true;
+}

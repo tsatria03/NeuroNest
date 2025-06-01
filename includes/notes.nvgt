@@ -89,10 +89,34 @@ form.monitor();
 notetext=form.get_text(dockbox);
 if (key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
 {
-if (yes_no("Are you sure you want to close this note? Unsaved changes will be lost."))
-notewriter();
+setupmenu();
+m.add_items({"Yes, save it", "No, discard it", "Cancel"});
+m.intro_text = "Do you want to save this note before closing it?";
+int choice = m.run();
+if (choice == 0)
+{
+file f;
+if (f.open(notename, "wb"))
+{
+f.write(notetext);
+f.close();
+alert("Saved", "Note saved to " + notename);
+}
 else
+{
+alert("Error", "Could not save the note.");
+}
+wait(500);
+notewriter();
+}
+else if (choice == 1)
+{
+notewriter();
+}
+else
+{
 form.focus(dockbox);
+}
 }
 if (form.is_pressed(infdock))
 {
