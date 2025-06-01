@@ -1,4 +1,5 @@
 #include"includes/includes.nvgt"
+int themeslot;
 int echomode=1;
 int current_theme_index = 0;
 string keyboardtheme="keyboard";
@@ -12,38 +13,13 @@ audio_form form;
 sound_pool p, spool, temp;
 savedata st("data/preffs/options.dat","F3Jua5qKnJADtZH94CKSUxVr7kAl3BCW6D4MlajEwWb3JUVDXq7HYT79zD18XMco8f1VDE6SNnjB3ApdUIb4mDd5DSxYAw8KiI9tZAEURDwExxEUZnTIRdHs2kBCujq6CM0Zt9awIZO08HSiGMpvKv78MYR4oeb4N8pzLE7nltqeobTsFCdtgFC9TPXOyGX82SmyxlTuPzJYeZSmCVI2VsLsq0YRZXjBGXnWyTRIobbc7v0oSUPCB6EjK3V1B6B6RNA2rhreNZB2K5RHSMfU1m0IjLu5CNppbKNQaxzfnRWcOVtQFdlOCIqEhUSi4jraN1C11zMSp8bD4ciOe2uOgq72s1jfzWxzDEHSzGjz2TvS");
 virtual_dialogs vd;
-void readpreffs()
-{
-st.load();
-if(st.d.exists("echomode"))
-{
-echomode=st.read_number("echomode");
-form.set_default_keyboard_echo(echomode);
-}
-if(st.d.exists("keyboardtheme"))
-{
-keyboardtheme=st.read_string("keyboardtheme");
-for (uint i = 0; i < keyboardthemes.length(); i++)
-{
-if (keyboardthemes[i] == keyboardtheme)
-{
-current_theme_index = i;
-break;
-}
-}
-}
-}
-void writepreffs()
-{
-st.add("echomode",echomode);
-st.add("keyboardtheme",keyboardtheme);
-st.save();
-}
 void main()
 {
 if (!directory_exists("data/preffs")) directory_create("data/preffs");
 if (!directory_exists("data/notes")) directory_create("data/notes");
+readpreffs();
 keyboardthemes = list_folders("sounds/typing themes/");
+keyboardthemes.sort(natural_number_sort);
 if (keyboardthemes.length() > 0)
 {
 bool found_theme = false;
@@ -66,7 +42,6 @@ else
 {
 alert("No keyboard themes found!", "Make sure folders are in: sounds/typing themes/");
 }
-readpreffs();
 getver();
 show_window("NeuroNest, version "+version);
 if(appstence.is_already_running)
@@ -78,171 +53,5 @@ else
 {
 wait(500);
     notewriter();
-}
-}
-void notewriter()
-{
-form.reset();
-form.create_window("NeuroNest", false);
-int newdock=form.create_button("Create note");
-int opdock=form.create_button("Load note");
-int quit=form.create_button("Close app");
-form.focus(newdock);
-while(true)
-{
-wait(5);
-key_echocheck(form);
-form.monitor();
-if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
-{
-current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
-keyboardthemes.sort(natural_number_sort);
-writepreffs();
-keyboardtheme = keyboardthemes[current_theme_index];
-spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false);
-speak(keyboardtheme);
-}
-if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
-{
-exit();
-}
-if(form.is_pressed(newdock))
-{
-vd.set_disallowed_chars("!@#$%^&*()[]{};:'\"\\|,.<>?/+=`~", false, "This character is not allowed.");
-string nm=vd.input_box("","Enter the title of this note.");
-if (!nm.empty())
-{
-string fullpath = "data/notes/" + nm + ".txt";
-file f;
-if (f.open(fullpath, "wb"))
-{
-f.write("");
-f.close();
-notename = fullpath;
-notetext = "";
-alert("Note created", "Note created at " + notename);
-wait(500);
-note_editor();
-}
-else
-{
-alert("Error", "Could not create the note: " + fullpath);
-wait(500);
-notewriter();
-}
-}
-}
-if(form.is_pressed(opdock))
-{
-string path = open_file_dialog("Text Files:txt", "data/notes/");
-if (!path.empty())
-{
-file f;
-if (f.open(path, "rb"))
-{
-notetext = f.read();
-f.close();
-notename = path;
-alert("Note loaded", "Opened " + notename);
-wait(500);
-note_editor();
-}
-else
-{
-alert("Error", "Failed to read the note.");
-wait(500);
-notewriter();
-}
-}
-}
-}
-}
-void note_editor()
-{
-form.reset();
-form.create_window("note editor", false);
-int dockbox = form.create_input_box("Text area", notetext, read_only:false, multiline:true, multiline_enter:true);
-int opdock=form.create_button("Load note");
-int savdock=form.create_button("Save note");
-int savdock2=form.create_button("Save note as");
-int quit=form.create_button("Close note");
-form.focus(dockbox);
-while(true)
-{
-wait(5);
-key_echocheck(form);
-form.monitor();
-notetext=form.get_text(dockbox);
-if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
-{
-current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
-keyboardthemes.sort(natural_number_sort);
-writepreffs();
-keyboardtheme = keyboardthemes[current_theme_index];
-spool.play_stationary(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false);
-speak(keyboardtheme);
-}
-if(key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
-{
-notewriter();
-}
-if(form.is_pressed(savdock))
-{
-file f;
-if (f.open(notename, "wb"))
-{
-f.write(notetext);
-f.close();
-alert("Saved", "Note saved to " + notename);
-}
-else
-{
-alert("Error", "Could not save the note.");
-}
-}
-if (form.is_pressed(savdock2))
-{
-string newpath = save_file_dialog("Text Files:txt", "data/notes/");
-if (!newpath.empty())
-{
-if (!newpath.lower().ends_with(".txt"))
-newpath += ".txt";
-file f;
-if (f.open(newpath, "wb"))
-{
-f.write(notetext);
-f.close();
-notename = newpath;
-alert("Saved", "Note saved as " + notename);
-}
-else
-{
-alert("Error", "Could not save the note.");
-}
-}
-}
-if(form.is_pressed(opdock))
-{
-string path = open_file_dialog("Text Files:txt", "data/notes/");
-if (!path.empty())
-{
-file f;
-if (f.open(path, "rb"))
-{
-notetext = f.read();
-f.close();
-notename = path;
-alert("Note loaded", "Opened " + notename);
-wait(500);
-note_editor();
-}
-else
-{
-alert("Error", "Failed to read the note.");
-wait(500);
-note_editor();
-}
-}
-}
 }
 }

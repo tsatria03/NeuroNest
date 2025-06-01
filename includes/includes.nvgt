@@ -5,7 +5,9 @@
 #include"sound_pool.nvgt"
 #include"extrafuncts.nvgt"
 #include"form.nvgt"
+#include"notes.nvgt"
 #include"savedata.nvgt"
+#include"savefuncts.nvgt"
 #include"speech.nvgt"
 #include"virtual_dialogs.nvgt"
 typedef uint8 usmall; typedef int8 small;

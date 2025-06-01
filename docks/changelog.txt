@@ -1,4 +1,5 @@
 new in 1.0
+Resolved an issue where cycling keyboard themes using the F1 key could select incorrect themes due to the theme list being sorted after the index was incremented. The sorting is now applied before index changes, ensuring consistent theme order and proper selection.
 Added a sound to indicate changing keyboard themes. This sound is available for all keyboard themes.
 Fixed a bug where keyboard themes had problems showing up propperly upon launching the app. This also effected the F1 key to change them as well.
 Added the ability to cycle through the available keyboard themes found in the sounds folder. You can press F1 to do this in all input boxes. The keyboard theme will also be saved the next time you relaunch the app.
