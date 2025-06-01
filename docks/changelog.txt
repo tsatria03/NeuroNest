@@ -1,4 +1,5 @@
 new in 1.0
+Added a sound to indicate changing keyboard themes. This sound is available for all keyboard themes.
 Fixed a bug where keyboard themes had problems showing up propperly upon launching the app. This also effected the F1 key to change them as well.
 Added the ability to cycle through the available keyboard themes found in the sounds folder. You can press F1 to do this in all input boxes. The keyboard theme will also be saved the next time you relaunch the app.
 Resolved an issue where the text input box was not propperly initialized with the contents of a file when opening up existing notes.
@@ -6,5 +7,5 @@ Added the ability to save created files to a custom location instead of the defa
 Added the ability to open an existing file within the note editor screen.
 Added the ability to create and save your written notes to a file.
 Improved the save data class by making all of the overloaded variable functions into one unified function for easier method calls.
-Made it so dialog and typing theme settings are saved in the app.
-Added various dialog and typing related sounds to the app.
+Made it so typing themes are saved in the app.
+Added typing sounds to the app.
