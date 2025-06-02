@@ -20,29 +20,53 @@ notewriter();
 }
 if(form.is_pressed(newdock))
 {
-vd.set_disallowed_chars("!@#$%^&*()[]{};:'\"\\|,.<>?/+-=`~", false, "This character is not allowed.");
-string nm=vd.input_box("", "Enter the title of this note.");
-if (!nm.empty())
-{
-string fullpath = "data/notes/" + nm + ".txt";
-file f;
-if (f.open(fullpath, "wb"))
-{
-f.write("");
-f.close();
-notename = fullpath;
-notetext = "";
-alert("Note created", "Note created at " + notename);
-wait(500);
-note_editor();
-}
-else
-{
-alert("Error", "Could not create the note: " + fullpath);
-wait(500);
-notewriter();
-}
-}
+    if (yes_no("Would you like to create an untitled note?"))
+    {
+        string fullpath = "data/notes/untitled.txt";
+        file f;
+        if (f.open(fullpath, "wb"))
+        {
+            f.write("");
+            f.close();
+            notename = fullpath;
+            notetext = "";
+            alert("Note created", "Untitled note created at "+fullpath);
+            wait(500);
+            note_editor();
+        }
+        else
+        {
+            alert("Error", "Could not create untitled note.");
+            wait(500);
+            notewriter();
+        }
+    }
+    else
+    {
+        vd.set_disallowed_chars("!@#$%^&*()[]{};:'\"\\|,.<>?/+-=`~", false, "This character is not allowed.");
+        string nm = vd.input_box("", "Enter the title of this note.");
+        if (!nm.empty())
+        {
+            string fullpath = "data/notes/" + nm + ".txt";
+            file f;
+            if (f.open(fullpath, "wb"))
+            {
+                f.write("");
+                f.close();
+                notename = fullpath;
+                notetext = "";
+                alert("Note created", "Note created at " + notename);
+                wait(500);
+                note_editor();
+            }
+            else
+            {
+                alert("Error", "Could not create the note at " + fullpath);
+                wait(500);
+                notewriter();
+            }
+        }
+    }
 }
 if(form.is_pressed(opdock))
 {
@@ -63,7 +87,7 @@ string filename = files[i];
 m.add_item(filename);
 displayNames.insert_last(filename);
 }
-m.add_item("Cancel");
+m.add_item("Back");
 m.intro_text = "Select a note to open.";
 int choice = m.run();
 if (choice >= 0 && choice < int(files.length()))
@@ -75,7 +99,7 @@ if (f.open(path, "rb"))
 notetext = f.read();
 f.close();
 notename = path;
-alert("Note loaded", "Opened " + notename);
+alert("Note loaded", "Opened " + string_replace(notename, "data/notes/", "", true));
 wait(500);
 note_editor();
 }
@@ -147,7 +171,7 @@ form.focus(dockbox);
 if (form.is_pressed(infdock))
 {
 notetext=form.get_text(dockbox);
-alert("Note Stats", get_note_charlines(notetext));
+alert("Note Stats for "+string_replace(notename, "data/notes/", "", true), get_note_charlines(notetext));
 wait(500);
 form.focus(dockbox);
 }
@@ -172,7 +196,7 @@ if (form.is_pressed(deldock))
         }
         else
         {
-            alert("Error", "The note file does not exist.");
+            alert("Error", "The note does not exist.");
             wait(500);
             form.focus(dockbox);
         }
@@ -234,7 +258,7 @@ string filename = files[i];
 m.add_item(filename);
 displayNames.insert_last(filename);
 }
-m.add_item("Cancel");
+m.add_item("Back");
 m.intro_text = "Select a note to open.";
 int fileChoice = m.run();
 if (fileChoice >= 0 && fileChoice < int(files.length()))
@@ -246,7 +270,7 @@ if (f.open(path, "rb"))
 notetext = f.read();
 f.close();
 notename = path;
-alert("Note loaded", "Opened " + notename);
+alert("Note loaded", "Opened " + string_replace(notename, "data/notes/", "", true));
 wait(500);
 note_editor();
 }
@@ -291,7 +315,7 @@ if (put_file_contents(newpath, contents))
 if (file_delete(notename))
 {
 notename = newpath;
-alert("Success", "Note renamed to: " + newname + ".txt");
+alert("Success", "Note renamed to " + newname + ".txt");
 wait(500);
 form.focus(dockbox);
 }

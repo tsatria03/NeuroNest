@@ -1,4 +1,5 @@
 new in 1.1
+Improved the note creation process. The app now asks the user if they’d like to create an untitled note when pressing the create Note button. If the user agrees, an empty untitled.txt file is created automatically. Otherwise, the user is prompted to enter a custom name for the note as before. This speeds up the process for jotting down quick notes.
 Added the ability to delete written notes in the note editor.
 Made it so opening a new note from within the note editor brings up a confermation prompt to save the note first before opening another one. This prevents accidental loss of work and ensures intentional switching of unopened notes.
 Replaced the old Open File Dialog with a new and improved Menu-Based list of notes. The app now scans data/notes for all txt files and displays them in an easy to view list. This allows for more control over how notes are selected and opened in the main window, and the note editor.
