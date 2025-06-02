@@ -100,6 +100,7 @@ form.reset();
 form.create_window("note editor", false);
 int dockbox = form.create_input_box("&Note text area", notetext, read_only:false, multiline:true, multiline_enter:true);
 int infdock=form.create_button("Note &info");
+int deldock=form.create_button("&Delete note");
 int opdock=form.create_button("&Load note");
 int rendock=form.create_button("&Rename note");
 int savdock=form.create_button("&Save note");
@@ -149,6 +150,37 @@ notetext=form.get_text(dockbox);
 alert("Note Stats", get_note_charlines(notetext));
 wait(500);
 form.focus(dockbox);
+}
+if (form.is_pressed(deldock))
+{
+    if (yes_no("Are you sure you want to permanently delete this note? This cannot be undone."))
+    {
+        if (file_exists(notename))
+        {
+            if (file_delete(notename))
+            {
+                alert("Deleted", "The note has been deleted.");
+                wait(500);
+                notewriter();
+            }
+            else
+            {
+                alert("Error", "Failed to delete the note.");
+                wait(500);
+                form.focus(dockbox);
+            }
+        }
+        else
+        {
+            alert("Error", "The note file does not exist.");
+            wait(500);
+            form.focus(dockbox);
+        }
+    }
+    else
+    {
+        form.focus(dockbox);
+    }
 }
 if(form.is_pressed(opdock))
 {
