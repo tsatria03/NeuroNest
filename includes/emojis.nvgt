@@ -1,0 +1,95 @@
+dictionary emoji_category;
+void load_emojis()
+{
+file emojiFile;
+if (!emojiFile.open("data/emojis/parsed_emojis.json", "r"))
+{
+alert("Emoji Loader", "Failed to open parsed_emojis.json");
+return;
+}
+string current_category = "";
+emoji_category.clear();
+while (!emojiFile.eof)
+{
+string buffer = "";
+string ch = emojiFile.read(1);
+while (ch != "\n" && !emojiFile.eof)
+{
+buffer += ch;
+ch = emojiFile.read(1);
+}
+buffer = string_trim_sides(buffer);
+if (buffer.length() == 0) continue;
+if (string_starts_with(buffer, "[") && string_ends_with(buffer, "]"))
+{
+current_category = buffer.substr(1, buffer.length() - 2);
+}
+else if (current_category != "")
+{
+if (!emoji_category.exists(current_category))
+emoji_category[current_category] = buffer + "\n";
+else
+{
+string temp = string(emoji_category[current_category]);
+temp += buffer + "\n";
+emoji_category[current_category] = temp;
+}
+}
+}
+emojiFile.close();
+}
+void parse_emojis()
+{
+string input_path = "data/emojis/emoji-test.txt";
+string output_path = "data/emojis/parsed_emojis.json";
+file inFile, outFile;
+if (!inFile.open(input_path, "r"))
+{
+alert("Emoji Parser", "Failed to open: " + input_path);
+return;
+}
+if (!outFile.open(output_path, "w"))
+{
+alert("Emoji Parser", "Failed to create: " + output_path);
+inFile.close();
+return;
+}
+string line = "";
+while (!inFile.eof)
+{
+string buffer = "";
+line = inFile.read(1);
+while (line != "\n" && !inFile.eof)
+{
+buffer += line;
+line = inFile.read(1);
+}
+buffer = string_trim_sides(buffer);
+if (string_starts_with(buffer, "# group: "))
+{
+string group = string_trim_sides(string_trim_left(buffer, 9));
+outFile.write("[" + group + "]\r\n");
+}
+else if (buffer.find("#") != -1 && buffer.find("; fully-qualified") != -1)
+{
+int hash = buffer.find("#");
+if (hash != -1)
+{
+string emoji_data = string_trim_sides(string_trim_left(buffer, hash + 1));
+int space1 = emoji_data.find(" ");
+int space2 = emoji_data.find(" ", space1 + 1);
+if (space1 != -1 && space2 != -1) {
+string emoji = emoji_data.substr(0, space1);
+string label = emoji_data.substr(space2 + 1);
+outFile.write(emoji + " " + label + "\r\n");
+}
+else
+{
+outFile.write(emoji_data + "\r\n");
+}
+}
+}
+}
+inFile.close();
+outFile.close();
+}

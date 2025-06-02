@@ -142,6 +142,7 @@ form.reset();
 form.create_window("note editor", false);
 int dockbox = form.create_input_box("&Note text area", notetext, read_only:false, multiline:true, multiline_enter:true);
 int infdock=form.create_button("Note &info");
+int emodock = form.create_button("Add &Emoticon");
 int deldock=form.create_button("&Delete note");
 int opdock=form.create_button("&Load note");
 int rendock=form.create_button("&Rename note");
@@ -155,7 +156,7 @@ wait(5);
 key_echo_themecheck(form);
 form.monitor();
 notetext=form.get_text(dockbox);
-if (key_pressed(KEY_ESCAPE) || form.is_pressed(quit))
+if (key_repeating(KEY_ESCAPE) || form.is_pressed(quit))
 {
 setupmenu();
 m.add_items({"Yes, save it", "No, discard it", "Cancel"});
@@ -192,6 +193,98 @@ notetext=form.get_text(dockbox);
 alert("Note Stats for "+string_replace(notename, "data/notes/", "", true), get_note_charlines(notetext));
 wait(500);
 form.focus(dockbox);
+}
+if (form.is_pressed(emodock))
+{
+array<string> keys = emoji_category.get_keys();
+if (keys.length() == 0)
+{
+alert("No emojis loaded", "Please make sure emojis have been parsed and loaded.");
+wait(500);
+form.focus(dockbox);
+}
+else
+{
+setupmenu();
+keys.sort_ascending();
+for (uint i = 0; i < keys.length(); i++)
+{
+m.add_item(keys[i]);
+}
+m.add_item("Back");
+m.intro_text = "Select an emoji category.";
+int categoryChoice = m.run();
+if (categoryChoice == -1 || categoryChoice >= int(keys.length()))
+{
+form.focus(dockbox);
+}
+else
+{
+string selectedCategory = keys[categoryChoice];
+string emojisRaw = string(emoji_category[selectedCategory]);
+array<string> lines = emojisRaw.split("\n");
+array<string> displayList;
+array<string> emojiOnlyList;
+for (uint i = 0; i < lines.length(); i++)
+{
+string trimmed = string_trim_sides(lines[i]);
+if (trimmed == "") continue;
+int spaceIndex = trimmed.find(" ");
+if (spaceIndex > 0)
+{
+string emojiChar = string_left(trimmed, spaceIndex);
+string label = string_trim_left(trimmed, spaceIndex + 1);
+displayList.insert_last(label);
+emojiOnlyList.insert_last(emojiChar);
+}
+}
+for (uint i = 0; i < displayList.length(); i++)
+{
+	for (uint j = i + 1; j < displayList.length(); j++)
+	{
+		if (displayList[j] < displayList[i])
+		{
+			string tmpDisplay = displayList[i];
+			displayList[i] = displayList[j];
+			displayList[j] = tmpDisplay;
+
+			string tmpEmoji = emojiOnlyList[i];
+			emojiOnlyList[i] = emojiOnlyList[j];
+			emojiOnlyList[j] = tmpEmoji;
+		}
+	}
+}
+if (displayList.length() == 0)
+{
+alert("No emojis", "There are no emojis in this category.");
+wait(500);
+form.focus(dockbox);
+}
+else
+{
+setupmenu();
+for (uint i = 0; i < displayList.length(); i++)
+{
+m.add_item(displayList[i]);
+}
+m.add_item("Back");
+m.intro_text = "Choose an emoji to copy.";
+int emojiChoice = m.run();
+if (emojiChoice == -1 || emojiChoice >= int(displayList.length()))
+{
+form.focus(dockbox);
+}
+else
+{
+string chosenEmoji = emojiOnlyList[emojiChoice];
+clipboard_copy_text(chosenEmoji);
+alert("Emoji copied", chosenEmoji + " has been copied to your clipboard!");
+wait(500);
+form.focus(dockbox);
+}
+}
+}
+}
 }
 if (form.is_pressed(deldock))
 {

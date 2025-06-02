@@ -3,6 +3,7 @@
 #include"instance.nvgt"
 #include"size.nvgt"
 #include"sound_pool.nvgt"
+#include"emojis.nvgt"
 #include"extrafuncts.nvgt"
 #include"form.nvgt"
 #include"menu.nvgt"
