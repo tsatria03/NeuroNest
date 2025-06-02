@@ -209,7 +209,16 @@ setupmenu();
 keys.sort_ascending();
 for (uint i = 0; i < keys.length(); i++)
 {
-m.add_item(keys[i]);
+string category = keys[i];
+string emojisRaw = string(emoji_category[category]);
+array<string> lines = emojisRaw.split("\n");
+int emojiCount = 0;
+for (uint j = 0; j < lines.length(); j++)
+{
+if (string_trim_sides(lines[j]) != "")
+emojiCount++;
+}
+m.add_item(category + ". There are " + string(emojiCount) + "emojis in this category.");
 }
 m.add_item("Back");
 m.intro_text = "Select an emoji category.";
@@ -240,19 +249,18 @@ emojiOnlyList.insert_last(emojiChar);
 }
 for (uint i = 0; i < displayList.length(); i++)
 {
-	for (uint j = i + 1; j < displayList.length(); j++)
-	{
-		if (displayList[j] < displayList[i])
-		{
-			string tmpDisplay = displayList[i];
-			displayList[i] = displayList[j];
-			displayList[j] = tmpDisplay;
-
-			string tmpEmoji = emojiOnlyList[i];
-			emojiOnlyList[i] = emojiOnlyList[j];
-			emojiOnlyList[j] = tmpEmoji;
-		}
-	}
+for (uint j = i + 1; j < displayList.length(); j++)
+{
+if (displayList[j] < displayList[i])
+{
+string tmpDisplay = displayList[i];
+displayList[i] = displayList[j];
+displayList[j] = tmpDisplay;
+string tmpEmoji = emojiOnlyList[i];
+emojiOnlyList[i] = emojiOnlyList[j];
+emojiOnlyList[j] = tmpEmoji;
+}
+}
 }
 if (displayList.length() == 0)
 {
@@ -268,7 +276,7 @@ for (uint i = 0; i < displayList.length(); i++)
 m.add_item(displayList[i]);
 }
 m.add_item("Back");
-m.intro_text = "Choose an emoji to copy.";
+m.intro_text = selectedCategory+" menu. Choose an emoji to copy.";
 int emojiChoice = m.run();
 if (emojiChoice == -1 || emojiChoice >= int(displayList.length()))
 {
@@ -278,7 +286,7 @@ else
 {
 string chosenEmoji = emojiOnlyList[emojiChoice];
 clipboard_copy_text(chosenEmoji);
-alert("Emoji copied", chosenEmoji + " has been copied to your clipboard!");
+alert("Copied", "The "+chosenEmoji + " emoji has been copied to your clipboard!");
 wait(500);
 form.focus(dockbox);
 }
