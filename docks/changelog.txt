@@ -1,4 +1,5 @@
 new in 1.1
+Improved duplicate name detection when creating new notes. If a user attempts to create an untitled or custom titled note, and the file already exists, the app now displays a clear error message and aborts the creation.
 Improved the readability of note names inside various alerts and dialogs. Whenever a note is opened, saved, renamed, or shown in info popups, the displayed note name no longer includes the full data/notes path. Instead, only the clean note name is shown, making alerts easier to read and more user-friendly.
 Improved the note creation process. The app now asks the user if they’d like to create an untitled note when pressing the create Note button. If the user agrees, an empty untitled.txt file is created automatically. Otherwise, the user is prompted to enter a custom name for the note as before. This speeds up the process for jotting down quick notes.
 Added the ability to delete written notes in the note editor.
