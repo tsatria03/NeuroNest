@@ -1,11 +1,13 @@
 new in 1.1
+Made it so opening a new note from within the note editor brings up a confermation prompt to save the note first before opening another one. This prevents accidental loss of work and ensures intentional switching of unopened notes.
+Replaced the old Open File Dialog with a new and improved Menu-Based list of notes. The app now scans data/notes for all txt files and displays them in an easy to view list. This allows for more control over how notes are selected and opened in the main window, and the note editor.
 Enhanced the close note dialog by replacing the original two-prompt confirmation system with a single streamlined menu. Users are now presented with a clear 3-option dialog for what to do with the written note. This improves usability, prevents accidental data loss, and keeps the workflow smooth and intuitive.
 Made it so the function keys don't trigger actions related to the input box unless you're spisificly focused on the control.
 The word count system has been fully removed due to inconsistent behavior and inaccurate results across various input scenarios.
 new in 1.0
 Resolved an issue where the line count would still show as 1 after all content had been deleted from a note. The get_note_stats function now accurately skips over empty or whitespace-filled lines.
 Resolved an issue where the word count would incorrectly display as 1 even if the note was empty or only contained spaces. The get_note_stats function now properly trims and checks for real word content before attempting to count it.
-Added the ability to view information for the currently opened note. You can now press the note info" button in the note editor to view it's statistics, such as character count, word count, and line count.
+Added the ability to view information for the currently opened note. You can now press the note info button in the note editor to view it's statistics, such as character count, word count, and line count.
 Added menu prompts to actions that involve patencial data los in the app.
 Added sounds to indicate toggling typing themes. These sounds are available for all keyboard themes.
 Added the ability to toggle the typing sounds on or off. You can press F4 to do this in all input boxes. This setting will be saved the next time you launch the app.

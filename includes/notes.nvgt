@@ -46,9 +46,29 @@ notewriter();
 }
 if(form.is_pressed(opdock))
 {
-string path = open_file_dialog("Text Files:txt", "data/notes/");
-if (!path.empty())
+string[] files = find_files("data/notes/*.txt");
+if (files.length() == 0)
 {
+alert("No notes found", "There are no notes in data/notes.");
+wait(500);
+notewriter();
+}
+else
+{
+setupmenu();
+array<string> displayNames;
+for (uint i = 0; i < files.length(); i++)
+{
+string filename = files[i];
+m.add_item(filename);
+displayNames.insert_last(filename);
+}
+m.add_item("Cancel");
+m.intro_text = "Select a note to open.";
+int choice = m.run();
+if (choice >= 0 && choice < int(files.length()))
+{
+string path = "data/notes/" + displayNames[choice];
 file f;
 if (f.open(path, "rb"))
 {
@@ -61,8 +81,13 @@ note_editor();
 }
 else
 {
-alert("Error", "Failed to read the note.");
+alert("Error", "Failed to read the note at " + path);
 wait(500);
+notewriter();
+}
+}
+else
+{
 notewriter();
 }
 }
@@ -127,9 +152,62 @@ form.focus(dockbox);
 }
 if(form.is_pressed(opdock))
 {
-string path = open_file_dialog("Text Files:txt", "data/notes/");
-if (!path.empty())
+setupmenu();
+m.add_items({"Yes, save it", "No, discard it", "Cancel"});
+m.intro_text = "Do you want to save your current note before opening another one?";
+int choice = m.run();
+bool shouldOpenNew = false;
+if (choice == 0)
 {
+file f;
+if (f.open(notename, "wb"))
+{
+f.write(notetext);
+f.close();
+alert("Saved", "Note saved to " + notename);
+wait(500);
+shouldOpenNew = true;
+}
+else
+{
+alert("Error", "Could not save the note.");
+wait(500);
+form.focus(dockbox);
+}
+}
+else if (choice == 1)
+{
+shouldOpenNew = true;
+}
+else
+{
+form.focus(dockbox);
+}
+if (shouldOpenNew)
+{
+string[] files = find_files("data/notes/*.txt");
+if (files.length() == 0)
+{
+alert("No notes found", "There are no notes in data/notes.");
+wait(500);
+form.focus(dockbox);
+}
+else
+{
+setupmenu();
+array<string> displayNames;
+for (uint i = 0; i < files.length(); i++)
+{
+string filename = files[i];
+m.add_item(filename);
+displayNames.insert_last(filename);
+}
+m.add_item("Cancel");
+m.intro_text = "Select a note to open.";
+int fileChoice = m.run();
+if (fileChoice >= 0 && fileChoice < int(files.length()))
+{
+string path = "data/notes/" + displayNames[fileChoice];
 file f;
 if (f.open(path, "rb"))
 {
@@ -142,9 +220,15 @@ note_editor();
 }
 else
 {
-alert("Error", "Failed to read the note.");
+alert("Error", "Failed to read the note at " + path);
 wait(500);
 form.focus(dockbox);
+}
+}
+else
+{
+form.focus(dockbox);
+}
 }
 }
 }

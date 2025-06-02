@@ -86,6 +86,10 @@ class menu {
 			intro();
 			automatic_intro = false;
 		}
+if(key_repeating(KEY_TAB) and intro_text.length()>0)
+{
+speak(intro_text);
+}
 		form.monitor();
 		if (form.is_pressed(f_cancel)) {
 			play(close_sound);
