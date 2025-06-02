@@ -1,3 +1,5 @@
+new in 1.2.
+Resolved an issue where the displayed emoji names were sorted independently from their corresponding actual emoji characters, causing the wrong emoji to be copied. The system now sorts both the emoji names and characters together to ensure correct alignment and accurate clipboard copying.
 new in 1.1
 Added the ability to insert emoticons in your notes. There's now a button to brows through all available emojis by category. These are able to be copied to the clipboard for quick pasting into your current note.
 Improved duplicate name detection when creating new notes. If a user attempts to create an untitled or custom titled note, and the file already exists, the app now displays a clear error message and aborts the creation.

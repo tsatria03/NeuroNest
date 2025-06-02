@@ -7,7 +7,7 @@ string keyboardtheme="keyboard";
 string[] keyboardthemes;
 string notename;
 string notetext;
-string version="1.1";
+string version="1.2";
 instance appstence("nt");
 audio_form form;
 menu m;

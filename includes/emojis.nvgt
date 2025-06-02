@@ -40,7 +40,7 @@ emojiFile.close();
 }
 void parse_emojis()
 {
-string input_path = "data/emojis/emoji-test.txt";
+string input_path = "data/emojis/loaded_emojis.txt";
 string output_path = "data/emojis/parsed_emojis.json";
 file inFile, outFile;
 if (!inFile.open(input_path, "r"))
