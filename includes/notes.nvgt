@@ -30,7 +30,7 @@ if(form.is_pressed(newdock))
             f.close();
             notename = fullpath;
             notetext = "";
-            alert("Note created", "Untitled note created at "+fullpath);
+            alert("Note created", "Note created at "+fullpath);
             wait(500);
             note_editor();
         }
@@ -44,7 +44,7 @@ if(form.is_pressed(newdock))
     else
     {
         vd.set_disallowed_chars("!@#$%^&*()[]{};:'\"\\|,.<>?/+-=`~", false, "This character is not allowed.");
-        string nm = vd.input_box("", "Enter the title of this note.");
+        string nm = vd.input_box("", "Enter the custom title of this note.");
         if (!nm.empty())
         {
             string fullpath = "data/notes/" + nm + ".txt";
@@ -73,7 +73,7 @@ if(form.is_pressed(opdock))
 string[] files = find_files("data/notes/*.txt");
 if (files.length() == 0)
 {
-alert("No notes found", "There are no notes in data/notes.");
+alert("No notes found", "There are no notes located in data/notes.");
 wait(500);
 notewriter();
 }
@@ -244,7 +244,7 @@ if (shouldOpenNew)
 string[] files = find_files("data/notes/*.txt");
 if (files.length() == 0)
 {
-alert("No notes found", "There are no notes in data/notes.");
+alert("No notes found", "There are no notes located in data/notes.");
 wait(500);
 form.focus(dockbox);
 }
