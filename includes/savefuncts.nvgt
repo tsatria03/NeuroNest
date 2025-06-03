@@ -21,7 +21,7 @@ for (uint i = 0; i < keyboardthemes.length(); i++)
 {
 if (keyboardthemes[i] == keyboardtheme)
 {
-current_theme_index = i;
+current_key_theme_index = i;
 break;
 }
 }

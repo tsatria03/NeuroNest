@@ -1,4 +1,5 @@
 new in 1.2.
+Added the ability to change the dialog theme for reading notes in the note editor. The dialog theme will also be saved the next time you relaunch the app.
 Added the ability to quickly read your written notes with the new read note button in the note editor. This will use the virtual dialog to read them. Multiline text is also allowed in the note as well.
 Added an all emojis category to the emoji menu. This combines all of the other emojis found in their categories into one central menu for easier viewing.
 Made it so the emoji cleanup process runs automatically when the app starts. This keeps the emoji file organized without requiring manual editing by the user.

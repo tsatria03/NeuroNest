@@ -149,6 +149,7 @@ form.create_window("note editor", false);
 int dockbox = form.create_input_box("&Note text for "+string_replace(notename, "data/notes/", "", true), notetext, read_only:false, multiline:true, multiline_enter:true);
 int infdock=form.create_button("Note &info");
 int emodock = form.create_button("Add &Emoticon");
+int dlgdock = form.create_button("Change dialog &theme");
 int deldock=form.create_button("&Delete note");
 int opdock=form.create_button("&Load note");
 int viewdock=form.create_button("&Read note");
@@ -193,6 +194,39 @@ else
 {
 form.focus(dockbox);
 }
+}
+if (form.is_pressed(dlgdock))
+{
+    array<string> themes = find_directories("sounds/dialogs/*");
+    if (themes.length() == 0)
+    {
+        alert("No themes found", "There are no dialog sound themes in the sounds/dialogs folder.");
+        wait(500);
+form.focus(dlgdock);
+    }
+    else
+    {
+        setupmenu();
+        themes.sort_ascending();
+        for (uint i = 0; i < themes.length(); i++)
+        {
+            if (themes[i] == dlgtheme)
+                m.add_item(themes[i] + ": Active");
+            else
+                m.add_item(themes[i]);
+        }
+        m.add_item("Back");
+        m.intro_text = "Choose a dialog sound theme.";
+        int choice = m.run();
+        if (choice >= 0 && choice < int(themes.length()))
+        {
+            dlgtheme = themes[choice];
+writepreffs();
+            alert("Success", "Dlg theme set to " + dlgtheme);
+        }
+wait(500);
+form.focus(dlgdock);
+    }
 }
 if (form.is_pressed(infdock))
 {

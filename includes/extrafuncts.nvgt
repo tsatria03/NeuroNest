@@ -157,8 +157,8 @@ if(form.get_control_type(form.get_current_focus())==ct_input)
 if (key_repeating(KEY_F1) && keyboardthemes.length() > 0)
 {
 keyboardthemes.sort(natural_number_sort);
-current_theme_index = (current_theme_index + 1) % keyboardthemes.length();
-keyboardtheme = keyboardthemes[current_theme_index];
+current_key_theme_index = (current_key_theme_index + 1) % keyboardthemes.length();
+keyboardtheme = keyboardthemes[current_key_theme_index];
 writepreffs();
 spool.destroy_sound(themeslot);
 themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);

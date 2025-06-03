@@ -2,7 +2,7 @@
 int themeslot;
 bool themesound=true;
 int echomode=1;
-int current_theme_index = 0;
+int current_key_theme_index = 0;
 string dlgtheme="dlg";
 string keyboardtheme="keyboard";
 string[] keyboardthemes;
@@ -38,7 +38,7 @@ for (uint i = 0; i < keyboardthemes.length(); i++)
 {
 if (keyboardthemes[i] == keyboardtheme)
 {
-current_theme_index = i;
+current_key_theme_index = i;
 found_theme = true;
 break;
 }
@@ -46,7 +46,7 @@ break;
 if (!found_theme)
 {
 keyboardtheme = keyboardthemes[0];
-current_theme_index = 0;
+current_key_theme_index = 0;
 }
 }
 else
