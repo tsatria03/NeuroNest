@@ -1,4 +1,55 @@
-dictionary emoji_category;
+bool check_emojis()
+{
+    array<string> keys = emoji_category.get_keys();
+    if (keys.length() == 0) return false;
+    dictionary seenEmojis;
+    array<string> categoriesToDelete;
+    int totalFixes = 0;
+    for (uint i = 0; i < keys.length(); i++)
+{
+        string category = keys[i];
+        string data = string(emoji_category[category]);
+        array<string> lines = data.split("\n");
+        array<string> cleanedLines;
+        for (uint j = 0; j < lines.length(); j++)
+{
+            string line = string_trim_sides(lines[j]);
+            if (line == "") continue;
+            int spaceIndex = line.find(" ");
+            if (spaceIndex == -1) {
+                totalFixes++;
+                continue;
+            }
+            string emojiChar = string_left(line, spaceIndex);
+            if (seenEmojis.exists(emojiChar)) {
+                totalFixes++;
+                continue;
+            }
+            seenEmojis[emojiChar] = "true";
+            cleanedLines.insert_last(line);
+        }
+        if (cleanedLines.length() == 0)
+{
+            categoriesToDelete.insert_last(category);
+            continue;
+        }
+        emoji_category[category] = "";
+        for (uint j = 0; j < cleanedLines.length(); j++)
+{
+            emoji_category[category] = string(emoji_category[category]) + cleanedLines[j] + "\n";
+        }
+    }
+    for (uint i = 0; i < categoriesToDelete.length(); i++)
+{
+        emoji_category.erase(categoriesToDelete[i]);
+        totalFixes++;
+    }
+    if (totalFixes > 0)
+{
+        alert("Emoji Cleanup", "Finished auto-fixing emoji file. " + string(totalFixes) + " issues were resolved.");
+    }
+    return emoji_category.get_keys().length() > 0;
+}
 void load_emojis()
 {
     file emojiFile;
@@ -9,6 +60,7 @@ void load_emojis()
     }
     string current_category = "";
     emoji_category.clear();
+    dictionary categoryCheck;
     while (!emojiFile.eof)
 {
         string line = "";
@@ -22,7 +74,15 @@ void load_emojis()
         if (line.length() == 0) continue;
         if (string_starts_with(line, "[") && string_ends_with(line, "]"))
 {
-            current_category = line.substr(1, line.length() - 2);
+            string new_category = line.substr(1, line.length() - 2);
+            if (categoryCheck.exists(new_category))
+{
+                alert("Emoji Loader", "Duplicate category header detected: " + new_category);
+                emojiFile.close();
+                return;
+            }
+            current_category = new_category;
+            categoryCheck[current_category] = "true";
         }
 else if (current_category != "")
 {
@@ -48,13 +108,40 @@ void save_emojis()
 {
         string category = keys[i];
         emojiFile.write("[" + category + "]\r\n");
-        string data = string(emoji_category[category]);
-        array<string> lines = data.split("\n");
+        string raw = string(emoji_category[category]);
+        array<string> lines = raw.split("\n");
+        array<string> emojiChars;
+        array<string> labels;
         for (uint j = 0; j < lines.length(); j++)
 {
             string trimmed = string_trim_sides(lines[j]);
-            if (trimmed.length() > 0)
-                emojiFile.write(trimmed + "\r\n");
+            if (trimmed == "") continue;
+            int spaceIndex = trimmed.find(" ");
+            if (spaceIndex > 0) {
+                string emojiChar = string_left(trimmed, spaceIndex);
+                string label = string_trim_left(trimmed, spaceIndex + 1);
+                emojiChars.insert_last(emojiChar);
+                labels.insert_last(label);
+            }
+        }
+        for (uint j = 0; j < labels.length(); j++)
+{
+            for (uint k = j + 1; k < labels.length(); k++)
+{
+                if (labels[k] < labels[j])
+{
+                    string tmpLabel = labels[j];
+                    labels[j] = labels[k];
+                    labels[k] = tmpLabel;
+                    string tmpEmoji = emojiChars[j];
+                    emojiChars[j] = emojiChars[k];
+                    emojiChars[k] = tmpEmoji;
+                }
+            }
+        }
+        for (uint j = 0; j < emojiChars.length(); j++)
+{
+            emojiFile.write(emojiChars[j] + " " + labels[j] + "\r\n");
         }
         emojiFile.write("\r\n");
     }

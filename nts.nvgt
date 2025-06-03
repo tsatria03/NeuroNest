@@ -10,6 +10,7 @@ string notetext;
 string version="1.2";
 instance appstence("nt");
 audio_form form;
+dictionary emoji_category;
 menu m;
 sound_pool spool;
 savedata st("data/preffs/options.dat","F3Jua5qKnJADtZH94CKSUxVr7kAl3BCW6D4MlajEwWb3JUVDXq7HYT79zD18XMco8f1VDE6SNnjB3ApdUIb4mDd5DSxYAw8KiI9tZAEURDwExxEUZnTIRdHs2kBCujq6CM0Zt9awIZO08HSiGMpvKv78MYR4oeb4N8pzLE7nltqeobTsFCdtgFC9TPXOyGX82SmyxlTuPzJYeZSmCVI2VsLsq0YRZXjBGXnWyTRIobbc7v0oSUPCB6EjK3V1B6B6RNA2rhreNZB2K5RHSMfU1m0IjLu5CNppbKNQaxzfnRWcOVtQFdlOCIqEhUSi4jraN1C11zMSp8bD4ciOe2uOgq72s1jfzWxzDEHSzGjz2TvS");
@@ -20,6 +21,13 @@ if (!directory_exists("data/preffs")) directory_create("data/preffs");
 if (!directory_exists("data/notes")) directory_create("data/notes");
 readpreffs();
 load_emojis();
+if (check_emojis()) {
+    save_emojis();
+}
+else
+{
+    alert("Emoji file not saved", "One or more errors were found in your emoji data.");
+}
 keyboardthemes = list_folders("sounds/typing themes/");
 keyboardthemes.sort(natural_number_sort);
 if (keyboardthemes.length() > 0)

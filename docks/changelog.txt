@@ -1,4 +1,6 @@
 new in 1.2.
+Made it so the emoji cleanup process runs automatically when the app starts. This keeps the emoji file organized without requiring manual editing by the user.
+Added an emoji cleaning system to automatically fix issues in the emoji list. This system removes empty categories, duplicate category headers, and repeated or malformed emojis within each category. It also ensures all emojis are sorted alphabetically by category and label for consistency and readability.
 Simplified the emoji system by removing the old web-based parsing logic and switching to a cleaner, human-readable plain text format. The app now directly loads emoji categories in the app without needing any additional conversion from the user.
 Removed all of the skin tone emoji variations from the people & body category to streamline the emoji list and reduce clutter in the emoji menu.
 Made it so the emoji menu shows the user how many emojies there are for each category of emojis while hovering over the item.
