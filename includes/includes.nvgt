@@ -7,7 +7,7 @@
 #include"extrafuncts.nvgt"
 #include"form.nvgt"
 #include"menu.nvgt"
-#include"notes.nvgt"
+#include"note.nvgt"
 #include"savedata.nvgt"
 #include"savefuncts.nvgt"
 #include"speech.nvgt"

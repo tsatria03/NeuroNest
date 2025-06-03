@@ -19,7 +19,6 @@ void main()
 if (!directory_exists("data/preffs")) directory_create("data/preffs");
 if (!directory_exists("data/notes")) directory_create("data/notes");
 readpreffs();
-parse_emojis();
 load_emojis();
 keyboardthemes = list_folders("sounds/typing themes/");
 keyboardthemes.sort(natural_number_sort);

@@ -1,5 +1,7 @@
 new in 1.2.
-Made it so the emoji menu shows the user how many emojies there are for each category of emojis while hovering over the item in the menu.
+Simplified the emoji system by removing the old web-based parsing logic and switching to a cleaner, human-readable plain text format. The app now directly loads emoji categories in the app without needing any additional conversion from the user.
+Removed all of the skin tone emoji variations from the people & body category to streamline the emoji list and reduce clutter in the emoji menu.
+Made it so the emoji menu shows the user how many emojies there are for each category of emojis while hovering over the item.
 Resolved an issue where the displayed emoji names were sorted independently from their corresponding actual emoji characters, causing the wrong emoji to be copied. The system now sorts both the emoji names and characters together to ensure correct alignment and accurate clipboard copying.
 new in 1.1
 Added the ability to insert emoticons in your notes. There's now a button to brows through all available emojis by category. These are able to be copied to the clipboard for quick pasting into your current note.
