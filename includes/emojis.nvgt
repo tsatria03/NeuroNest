@@ -44,10 +44,6 @@ bool check_emojis()
         emoji_category.erase(categoriesToDelete[i]);
         totalFixes++;
     }
-    if (totalFixes > 0)
-{
-        alert("Emoji Cleanup", "Finished auto-fixing emoji file. " + string(totalFixes) + " issues were resolved.");
-    }
     return emoji_category.get_keys().length() > 0;
 }
 void load_emojis()

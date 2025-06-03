@@ -10,6 +10,10 @@ if(st.d.exists("echomode"))
 echomode=st.read_number("echomode");
 form.set_default_keyboard_echo(echomode);
 }
+if(st.d.exists("dlgtheme"))
+{
+dlgtheme=st.read_string("dlgtheme");
+}
 if(st.d.exists("keyboardtheme"))
 {
 keyboardtheme=st.read_string("keyboardtheme");
@@ -27,6 +31,7 @@ void writepreffs()
 {
 st.add("themesound",themesound);
 st.add("echomode",echomode);
+st.add("dlgtheme",dlgtheme);
 st.add("keyboardtheme",keyboardtheme);
 st.save();
 }

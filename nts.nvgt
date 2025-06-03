@@ -3,6 +3,7 @@ int themeslot;
 bool themesound=true;
 int echomode=1;
 int current_theme_index = 0;
+string dlgtheme="dlg";
 string keyboardtheme="keyboard";
 string[] keyboardthemes;
 string notename;
@@ -12,7 +13,7 @@ instance appstence("nt");
 audio_form form;
 dictionary emoji_category;
 menu m;
-sound_pool spool;
+sound_pool spool, temp;
 savedata st("data/preffs/options.dat","F3Jua5qKnJADtZH94CKSUxVr7kAl3BCW6D4MlajEwWb3JUVDXq7HYT79zD18XMco8f1VDE6SNnjB3ApdUIb4mDd5DSxYAw8KiI9tZAEURDwExxEUZnTIRdHs2kBCujq6CM0Zt9awIZO08HSiGMpvKv78MYR4oeb4N8pzLE7nltqeobTsFCdtgFC9TPXOyGX82SmyxlTuPzJYeZSmCVI2VsLsq0YRZXjBGXnWyTRIobbc7v0oSUPCB6EjK3V1B6B6RNA2rhreNZB2K5RHSMfU1m0IjLu5CNppbKNQaxzfnRWcOVtQFdlOCIqEhUSi4jraN1C11zMSp8bD4ciOe2uOgq72s1jfzWxzDEHSzGjz2TvS");
 virtual_dialogs vd;
 void main()

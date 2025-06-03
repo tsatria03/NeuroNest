@@ -145,7 +145,8 @@ int infdock=form.create_button("Note &info");
 int emodock = form.create_button("Add &Emoticon");
 int deldock=form.create_button("&Delete note");
 int opdock=form.create_button("&Load note");
-int rendock=form.create_button("&Rename note");
+int viewdock=form.create_button("&Read note");
+int rendock=form.create_button("Rena&me note");
 int savdock=form.create_button("&Save note");
 int savdock2=form.create_button("Save note &as");
 int quit=form.create_button("&Close note");
@@ -193,6 +194,22 @@ notetext=form.get_text(dockbox);
 alert("Note Stats for "+string_replace(notename, "data/notes/", "", true), get_note_charlines(notetext));
 wait(500);
 form.focus(dockbox);
+}
+if (form.is_pressed(viewdock))
+{
+notetext=form.get_text(dockbox);
+if(notetext.length()==0)
+{
+alert("Error", "There's nothing written in this note.");
+wait(500);
+form.focus(dockbox);
+}
+else
+{
+dlgmessage(notetext);
+wait(500);
+form.focus(viewdock);
+}
 }
 if (form.is_pressed(emodock))
 {
