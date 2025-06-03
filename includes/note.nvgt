@@ -216,7 +216,7 @@ form.focus(dlgdock);
                 m.add_item(themes[i]);
         }
         m.add_item("Back");
-        m.intro_text = "Choose a dialog sound theme.";
+        m.intro_text = "Choose a dialog theme to use for reading notes.";
         int choice = m.run();
         if (choice >= 0 && choice < int(themes.length()))
         {

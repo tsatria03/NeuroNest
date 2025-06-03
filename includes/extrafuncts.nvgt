@@ -161,7 +161,7 @@ current_key_theme_index = (current_key_theme_index + 1) % keyboardthemes.length(
 keyboardtheme = keyboardthemes[current_key_theme_index];
 writepreffs();
 spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);
+themeslot=spool.play_stationary_extended(find_sound("sounds/keyboards/"+keyboardtheme+"/*change*"),false,0,0,-5,100,false);
 speak(keyboardtheme);
 }
 if (key_pressed(KEY_F2))
@@ -179,7 +179,7 @@ if(themesound==true)
 themesound=false;
 writepreffs();
 spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*disable*"),false,0,0,-5,100,false);
+themeslot=spool.play_stationary_extended(find_sound("sounds/keyboards/"+keyboardtheme+"/*disable*"),false,0,0,-5,100,false);
 speak("Typing sounds disabled.");
 }
 else
@@ -187,7 +187,7 @@ else
 themesound=true;
 writepreffs();
 spool.destroy_sound(themeslot);
-themeslot=spool.play_stationary_extended(find_sound("sounds/typing themes/"+keyboardtheme+"/*enable*"),false,0,0,-5,100,false);
+themeslot=spool.play_stationary_extended(find_sound("sounds/keyboards/"+keyboardtheme+"/*enable*"),false,0,0,-5,100,false);
 speak("Typing sounds enabled.");
 }
 }

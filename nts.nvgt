@@ -1,3 +1,5 @@
+#pragma asset sounds
+#pragma document docks
 #include"includes/includes.nvgt"
 int themeslot;
 bool themesound=true;
@@ -29,7 +31,7 @@ else
 {
     alert("Emoji file not saved", "One or more errors were found in your emoji data.");
 }
-keyboardthemes = list_folders("sounds/typing themes/");
+keyboardthemes = list_folders("sounds/keyboards/");
 keyboardthemes.sort(natural_number_sort);
 if (keyboardthemes.length() > 0)
 {
@@ -51,7 +53,7 @@ current_key_theme_index = 0;
 }
 else
 {
-alert("No keyboard themes found!", "Make sure folders are in: sounds/typing themes/");
+alert("No keyboard themes found!", "Make sure folders are in: sounds/keyboards/");
 }
 show_window("NeuroNest, version "+version);
 if(appstence.is_already_running)
